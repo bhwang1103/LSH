@@ -2,12 +2,12 @@
 #include <fstream>
 #include <sstream>
 
-#include <flann/io/hdf5.h>
-#include <flann/algorithms/flsh_table.h>
-#include <flann/algorithms/flsh_index.h>
-#include <flann/util/random.h>
-#include <flann/util/params.h>
-#include <flann/algorithms/dist.h>
+#include <io/hdf5.h>
+#include <algorithms/flsh_table.h>
+#include <algorithms/flsh_index.h>
+#include <util/random.h>
+#include <util/params.h>
+#include <algorithms/dist.h>
 using namespace flann;
 using namespace std;
 
