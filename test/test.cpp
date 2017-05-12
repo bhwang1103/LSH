@@ -1,20 +1,14 @@
-#include <time.h>
-#include <fstream>
-#include <sstream>
-
 #include <io/hdf5.h>
-#include <algorithms/flsh_table.h>
-#include <algorithms/flsh_index.h>
+#include <util/flsh_table.h>
 #include <util/random.h>
 #include <util/params.h>
+#include <algorithms/flsh_index.h>
 #include <algorithms/dist.h>
 using namespace flann;
-using namespace std;
 
 int main(int argc, char** argv)
 {
-
-	int nn = 100;
+	int nn = 100; //the number of nearest neighbors
 	Matrix<float> dataset;
 	Matrix<float> query;
 	load_from_file(dataset, "siftdata.hdf5", "base");
@@ -22,15 +16,16 @@ int main(int argc, char** argv)
 	Matrix<size_t> indices(new size_t[query.rows*nn], query.rows, nn);
 	Matrix<float> dists(new float[query.rows*nn], query.rows, nn);
 
-
-	double time_Start = (double)clock();
-
-	FlshIndex<L2<float>>index(dataset, FlshIndexParams(16, 20, 8));
+	//根据实验需要进行调整
+	unsigned int table_ = 16;        // The number of hash tables to use
+	unsigned int key_size = 20;      //The length of the key in the hash tables
+	unsigned int multi_p = 8;        //The MAX-Number of levels to use in multi-probe
+	unsigned int pool_size = 5000;   // The pool size
+	
+	FlshIndex<L2<float>>index(dataset, FlshIndexParams(table_, key_size, multi_p));
 	index.buildIndex();
-	double time_End = (double)clock();
-	std::cout << "build index time is " << (time_End - time_Start) / 1000.0 << "s" << std::endl;
-
-	index.pnnSearch(query, indices, dists, nn, 100, flann::SearchParams(-1));
+	
+	index.pnnSearch(query, indices, dists, nn, pool_size, flann::SearchParams(-1));
 	save_to_file(indices, "flshindices.hdf5", "indices");
 
 	
