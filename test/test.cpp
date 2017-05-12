@@ -26,6 +26,7 @@ int main(int argc, char** argv)
 	index.buildIndex();
 	
 	index.pnnSearch(query, indices, dists, nn, pool_size, flann::SearchParams(-1));
+	std::cout<<indices.cols<<std::endl;
 	save_to_file(indices, "flshindices.hdf5", "indices");
 
 	
