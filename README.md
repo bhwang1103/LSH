@@ -9,7 +9,7 @@
 
 ## 实验方法（ VS2015 debug(64) ）
 * 将C++ code 添加到项目属性管理器VC++目录的**包含目录**下
-* 将dll文件添加到项目属性管理器VC++目录的**库目录下**
+* 将lib文件添加到项目属性管理器VC++目录的**库目录下**
 * 将 flann_cpp_s-gd.lib  flann_s-gd.lib flann-gd.lib 添加到**链接器**的附加依赖项
 * 运行test代码
 
